@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Special Surprise</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background: linear-gradient(135deg, #2c3e50, #3498db); /* خلفية جديدة بتدرج من الأزرق الغامق إلى الأزرق الفاتح */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Arial', sans-serif;
+            color: white;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .container {
+            text-align: center;
+            animation: fadeInContainer 2s ease-out; /* تأثير دخول الحاوية */
+        }
+
+        h1 {
+            font-size: 4rem;
+            margin: 0;
+            background: linear-gradient(90deg, #ff6f61, #ffcc00); /* تدرج لوني جديد من الأحمر الفاتح إلى الذهبي */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: glowingText 2s infinite, fadeInText 2s ease-out; /* إضافة تأثير الوميض والدخول للنص */
+        }
+
+        @keyframes glowingText {
+            0%, 100% {
+                text-shadow: 0 0 5px #ff6f61, 0 0 10px #ff6f61, 0 0 20px #ff6f61;
+            }
+            50% {
+                text-shadow: 0 0 20px #ffcc00, 0 0 30px #ffcc00, 0 0 40px #ffcc00;
+            }
+        }
+
+        @keyframes fadeInContainer {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInText {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        p {
+            font-size: 1.5rem;
+            margin-top: 1rem;
+            opacity: 0; /* البداية غير مرئية */
+            animation: fadeInText 3s ease-out 1s forwards; /* إضافة تأثير ظهور النص */
+        }
+
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: moveStars 20s linear infinite;
+        }
+
+        @keyframes moveStars {
+            from {
+                background-position: 0 0;
+            }
+            to {
+                background-position: 1000px 1000px;
+            }
+        }
+
+        /* شرايط الاحتفال - انفجار من أعلى لأسفل */
+        .confetti {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+            overflow: hidden;
+        }
+
+        .confetti-piece {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #f39c12;
+            animation: confettiFall 2s ease-in-out forwards;
+        }
+
+        @keyframes confettiFall {
+            0% {
+                opacity: 1;
+                transform: translateY(-100px) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars"></div>
+    <div class="confetti" id="confetti"></div>
+    <div class="container">
+        <h1 id="special-name">Welcome, [Name]!</h1>
+        <p>You are special. Welcome to my world!</p>
+    </div>
+
+    <script>
+        // إضافة الشرايط عند تحميل الصفحة
+        function createConfetti() {
+            const confettiContainer = document.getElementById('confetti');
+            const numConfetti = 100; // عدد الشرايط
+
+            for (let i = 0; i < numConfetti; i++) {
+                const confettiPiece = document.createElement('div');
+                confettiPiece.classList.add('confetti-piece');
+                confettiPiece.style.left = `${Math.random() * 100}%`;  // مكان عشوائي
+                confettiPiece.style.animationDelay = `${Math.random() * 2}s`; // تأخير عشوائي
+
+                // إضافة ألوان مختلفة للشرايط
+                const colors = ['#f39c12', '#e74c3c', '#8e44ad', '#3498db'];
+                confettiPiece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+
+                confettiContainer.appendChild(confettiPiece);
+            }
+        }
+
+        window.onload = function() {
+            createConfetti(); // تشغيل تأثير الشرايط عند تحميل الصفحة
+            const personName = "Rahma"; // استبدل بالاسم
+            document.getElementById("special-name").textContent = `Welcome, ${personName}!`;
+        };
+    </script>
+</body>
+</html>
